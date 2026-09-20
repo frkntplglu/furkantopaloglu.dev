@@ -1,26 +1,19 @@
 import { defineConfig } from "vite";
 import vinext from "vinext";
 import { cloudflare } from "@cloudflare/vite-plugin";
-
-function traceTransforms(name: string, enforce: "pre" | "post") {
-  return {
-    name: `debug-${name}-transforms`,
-    enforce,
-    transform(_code: string, id: string) {
-      if (id.includes("node_modules/.vite") || id.startsWith("\0")) return null;
-      console.error(`[vinext-trace:${name}] ${id}`);
-      return null;
-    },
-  };
-}
+import tailwindcss from "@tailwindcss/vite";
+import { responseStoreAdapter } from "@vinext/cloudflare/cache/response-store-adapter";
+import { imagesOptimizer } from "@vinext/cloudflare/images/images-optimizer";
 
 export default defineConfig({
   plugins: [
-    traceTransforms("pre", "pre"),
-    vinext(),
+    tailwindcss(),
+    vinext({
+      cache: responseStoreAdapter(),
+      images: { optimizer: imagesOptimizer() },
+    }),
     cloudflare({
       viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
     }),
-    traceTransforms("post", "post"),
   ],
 });

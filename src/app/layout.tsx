@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -7,9 +7,24 @@ import { ThemeProvider } from "next-themes";
 import { MotionProvider } from "@/components/motion";
 import { profile } from "@/data/profile";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const inter = Inter({ variable: "--font-inter", subsets: ["latin", "latin-ext"] });
+const geistSans = localFont({
+  src: "../fonts/geist-latin-wght-normal.woff2",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+  display: "swap",
+});
+const geistMono = localFont({
+  src: "../fonts/geist-mono-latin-wght-normal.woff2",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+  display: "swap",
+});
+const inter = localFont({
+  src: "../fonts/inter-latin-wght-normal.woff2",
+  variable: "--font-inter",
+  weight: "100 900",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: { default: `${profile.name} — ${profile.title}`, template: `%s — ${profile.name}` },

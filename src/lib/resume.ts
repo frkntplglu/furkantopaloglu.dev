@@ -1,8 +1,14 @@
-import fs from "node:fs";
-import path from "node:path";
+/// <reference types="vite/client" />
 import matter from "gray-matter";
 
-const resumeSource = fs.readFileSync(path.join(process.cwd(), "content/resume.md"), "utf8");
+// Bundled at build time: Workers have no filesystem to read `content/` from at runtime.
+const resumeSource = import.meta.glob("../../content/resume.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
+const source = Object.values(resumeSource)[0];
 
 export type Resume = {
   name: string;
@@ -12,6 +18,6 @@ export type Resume = {
 };
 
 export function getResume(): Resume {
-  const { data, content } = matter(resumeSource);
+  const { data, content } = matter(source);
   return { name: data.name, title: data.title, email: data.email, content };
 }
