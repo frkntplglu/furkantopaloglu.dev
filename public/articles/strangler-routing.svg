@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" font-family="ui-monospace,monospace" font-size="14">
+  <rect width="800" height="300" fill="#0c0c0f"/>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#a1a1aa"/></marker></defs>
+  <rect x="30" y="110" width="110" height="80" rx="8" fill="#18181b" stroke="#3f3f46"/>
+  <text x="85" y="155" fill="#fafafa" text-anchor="middle">Clients</text>
+  <rect x="250" y="110" width="130" height="80" rx="8" fill="#18181b" stroke="#a1a1aa"/>
+  <text x="315" y="155" fill="#fafafa" text-anchor="middle">Router</text>
+  <rect x="540" y="40" width="230" height="80" rx="8" fill="#18181b" stroke="#3f3f46"/>
+  <text x="655" y="85" fill="#a1a1aa" text-anchor="middle">Monolith (shrinking)</text>
+  <rect x="540" y="180" width="230" height="80" rx="8" fill="#18181b" stroke="#34d399"/>
+  <text x="655" y="225" fill="#34d399" text-anchor="middle">New services (growing)</text>
+  <path d="M140 150H250" stroke="#a1a1aa" marker-end="url(#a)"/>
+  <path d="M380 135L540 90" stroke="#71717a" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <path d="M380 165L540 215" stroke="#34d399" stroke-width="2" marker-end="url(#a)"/>
+</svg>
