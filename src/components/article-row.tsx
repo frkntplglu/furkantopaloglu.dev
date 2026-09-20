@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, FileText } from "lucide-react";
 import type { Article } from "@/lib/articles";
 import { Tag } from "@/components/tag";
 
@@ -15,12 +16,16 @@ export function ArticleRow({ article }: { article: Article }) {
       exit={{ opacity: 0, x: -12 }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative grid gap-1 border-b py-4 md:grid-cols-[6.5rem_1fr_auto] md:items-baseline md:gap-6"
+      className="group relative grid grid-cols-[48px_1fr] items-center gap-x-5 gap-y-1 border-b py-4 md:grid-cols-[48px_1fr_auto] md:gap-x-6"
     >
       <span aria-hidden className="absolute inset-y-0 -inset-x-3 -z-10 rounded-md bg-accent/0 transition-colors duration-300 group-hover:bg-accent/70" />
-      <time dateTime={article.date} className="font-mono text-xs text-muted-foreground">
-        {article.date}
-      </time>
+      <span className="flex size-12 items-center justify-center overflow-hidden rounded-xl border bg-background/60">
+        {article.cover ? (
+          <Image src={article.cover} alt="" aria-hidden width={48} height={48} unoptimized className="size-full object-cover" />
+        ) : (
+          <FileText aria-hidden className="size-6 text-muted-foreground" />
+        )}
+      </span>
       <div className="space-y-1.5">
         <h3 className="flex items-center gap-1.5 text-sm font-medium text-foreground transition-transform duration-300 group-hover:translate-x-1">
           <Link href={`/articles/${article.slug}`} className="after:absolute after:inset-0">
@@ -34,7 +39,10 @@ export function ArticleRow({ article }: { article: Article }) {
           ))}
         </div>
       </div>
-      <span className="font-mono text-xs text-muted-foreground md:text-right">{article.readTime}</span>
+      <div className="col-start-2 flex gap-2 font-mono text-xs text-muted-foreground md:col-start-auto md:flex-col md:gap-0.5 md:text-right">
+        <time dateTime={article.date}>{article.date}</time>
+        <span>{article.readTime}</span>
+      </div>
     </motion.li>
   );
 }
