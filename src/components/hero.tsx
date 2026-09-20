@@ -83,7 +83,7 @@ export function Hero() {
         </motion.span>
 
         <div className="space-y-2">
-          <motion.h1 variants={rise} className="bg-gradient-to-b from-foreground to-foreground/60 bg-clip-text font-display text-5xl font-bold leading-[1.15] tracking-tighter pb-[0.12em] -mb-[0.12em] text-transparent md:text-7xl">
+          <motion.h1 variants={rise} className="font-display text-5xl font-bold leading-[1.15] tracking-tight text-foreground md:text-7xl">
             {profile.name}
           </motion.h1>
           <motion.p variants={rise} className="font-mono text-sm text-muted-foreground">

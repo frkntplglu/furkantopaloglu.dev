@@ -1,4 +1,5 @@
-/// <reference types="vite/client" />
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
 
 export type Article = {
@@ -11,15 +12,13 @@ export type Article = {
   cover?: string;
 };
 
-// Bundled at build time: Workers have no filesystem to read `articles/` from at runtime.
-const files = import.meta.glob("../../articles/*.md", {
-  query: "?raw",
-  import: "default",
-  eager: true,
-}) as Record<string, string>;
+const articlesDir = path.join(process.cwd(), "articles");
 
 const sources = new Map(
-  Object.entries(files).map(([p, src]) => [p.split("/").pop()!, src]),
+  fs
+    .readdirSync(articlesDir)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => [f, fs.readFileSync(path.join(articlesDir, f), "utf8")] as const),
 );
 
 function readTime(content: string) {

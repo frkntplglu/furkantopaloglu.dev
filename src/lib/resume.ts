@@ -1,14 +1,8 @@
-/// <reference types="vite/client" />
+import fs from "node:fs";
+import path from "node:path";
 import matter from "gray-matter";
 
-// Bundled at build time: Workers have no filesystem to read `content/` from at runtime.
-const resumeSource = import.meta.glob("../../content/resume.md", {
-  query: "?raw",
-  import: "default",
-  eager: true,
-}) as Record<string, string>;
-
-const source = Object.values(resumeSource)[0];
+const resumeSource = fs.readFileSync(path.join(process.cwd(), "content/resume.md"), "utf8");
 
 export type Resume = {
   name: string;
@@ -18,6 +12,6 @@ export type Resume = {
 };
 
 export function getResume(): Resume {
-  const { data, content } = matter(source);
+  const { data, content } = matter(resumeSource);
   return { name: data.name, title: data.title, email: data.email, content };
 }
